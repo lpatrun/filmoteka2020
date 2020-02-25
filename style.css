@@ -1,0 +1,59 @@
+body, ul, li, p, h1, h2, h3, h4 {
+	margin: 0;
+	padding: 0;
+    font-family: sans-serif;
+}
+
+ul li{
+	list-style-type: none;
+}
+
+.top{
+    padding-top: 15px;
+    text-align: center;
+    width: 100%;
+    height: 50px;
+    background-color: bisque;
+}
+
+.render-movies{
+    float: left;
+}
+
+.movies-container{
+    width: 100%;
+    margin-top: 50px;
+    float: left;
+}
+
+.movies-container-wrapper ul li{
+    width: 21%;
+    margin-left: 2%;
+    margin-right: 2%;
+    float: left;
+    margin-bottom: 25px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.movies-container-wrapper ul li:hover{
+    box-shadow:  1px 1px 15px rgba(0, 0, 0, .15);
+}
+
+.movie-img{
+   margin-left: 21%;;
+}
+
+.movie-name-year{
+    text-align: center;
+}
+
+.movie-lang {
+    text-align: center;
+}
+
+.load-more{
+    width: 100px;
+    height: 70px;
+    background-color: chartreuse;
+}
