@@ -3,6 +3,7 @@
         <head>
             <meta charset="UTF-8">
             <title>Filmoteka</title>
+            <script src="https://kit.fontawesome.com/1a964fb64e.js" crossorigin="anonymous"></script>
             <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
             <script src="index.js" defer></script>
             <link rel="stylesheet" type="text/css" href="style.css">
@@ -10,8 +11,15 @@
         </head>
 
         <body>
+            <div id="myNav" class="overlay">
+                <a href="javascript:void(0)" class="closebtn" >&times;</a>
+                <div class="overlay-content">
+                    
+                </div>
+            </div>
+ 
             <div class="top">
-                <h2>Movie picker</h2>
+                <h2>FILMOTEKA</h2>
             </div>
             <div class="movies-container">
                 <div class="movies-container-wrapper">
@@ -19,8 +27,11 @@
                         
                     </ul>
                 </div>
+                <div class="button-container">
+                    <button class="load-more">Učitaj još</button>
+                    <button class="movie-roulette"><i class="fas fa-dice"></i></button>
+                </div>
             </div>
-            <div ><button class="load-more">Klik</button></div>
         </body>
         
     </html>
