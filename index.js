@@ -15,6 +15,10 @@ const movieData = {};
 const movieGenresState = {};
 const movieGenresDB = {};
 
+/***********************
+ ****Dohvaćanje baza****
+ **********************/
+
 const controlResults = async () => {
     //1 početni query
     const query = 'https://api.themoviedb.org/3/discover/movie?api_key=5945a0abd9acd913047172b2e6571d3e&sort_by=popularity.desc&include_adult=false&include_video=false&page=1';
@@ -94,6 +98,10 @@ class Search {
 controlResults();
 genreResults();
 
+/*******************************************
+ ****ograničavanje broja riječi u nazivu****
+ ******************************************/
+
 const limitMovieTitle = title => {
     const newTitle = [];
     if( title.length > 25){
@@ -108,6 +116,10 @@ const limitMovieTitle = title => {
     return title;
 }
 
+/******************************************
+ ****izvlačenje godine iz datuma objave****
+ *****************************************/
+
 const limitMovieYear = year => {
     year.split('');
     const newYear = [];
@@ -116,6 +128,10 @@ const limitMovieYear = year => {
      }
      return `${newYear.join('')}`;
 }
+
+/*********************************
+ ****rendera filmove u li-jeve****
+ ********************************/
 
 const renderMovie = (movie, i) => {
     const markup = `
@@ -140,6 +156,10 @@ const renderMovies = movies => {
     //movies.forEach(renderMovie);
 }
 
+/***************************************
+ ****gumb za učitavanje reda filmova****
+ **************************************/
+
 document.querySelector('.load-more').addEventListener('click', e => {
     e.preventDefault();
     j += 4;
@@ -150,6 +170,10 @@ document.querySelector('.load-more').addEventListener('click', e => {
         element.parentNode.removeChild(element);
     }
 });
+
+/*****************************************
+ ****render za određeni film u overlay****
+ ****************************************/
 
 const renderAMovie = (movie, i) => {
     const markup = `
@@ -169,6 +193,10 @@ const renderAMovie = (movie, i) => {
     document.querySelector('.render-a-movie').insertAdjacentHTML('beforeend', markup);
 }
 
+/*********************************
+ ****event listener na filmove****
+ ********************************/
+
 document.querySelector('.render-movies').addEventListener ('click', e=>{ 
     const id = e.target.closest('.movie').dataset.itemid;
     /* let list = document.querySelector('.overlay-content');
@@ -181,6 +209,10 @@ document.querySelector('.render-movies').addEventListener ('click', e=>{
     renderAMovie(movieData.search.result[id], id);
 });
 
+/*******************************************************
+ ****event listener na gumb za zatvaranje u overleju****
+ ******************************************************/
+
 document.querySelector('.closebtn').addEventListener ('click', e=> {
     document.getElementById("myNav").style.display = "none";
     let list = document.querySelector('.overlay-content');
@@ -189,6 +221,9 @@ document.querySelector('.closebtn').addEventListener ('click', e=> {
     }
   });
 
+/*****************************************
+****da se overlay može zatvoriti s esc****
+*****************************************/
 
   document.addEventListener('keydown', function(event) {
     if (event.keyCode == 27 || event.which == 27) {
@@ -199,6 +234,10 @@ document.querySelector('.closebtn').addEventListener ('click', e=> {
         }
     }
 });
+
+/**************************************
+ ****event listener na rulet button****
+ *************************************/
 
 document.querySelector('.movie-roulette').addEventListener('click', e => {
     e.preventDefault();
@@ -212,6 +251,10 @@ document.querySelector('.movie-roulette').addEventListener('click', e => {
     document.querySelector('.overlay-content').insertAdjacentHTML('beforeend', buttonMarkup);
 });
 
+/**********************
+ ****render žanrova****
+ *********************/
+
 const renderGenres = genres => {
     genres.forEach(renderGenre);
 }
@@ -223,6 +266,9 @@ const renderGenre = genre => {
     document.querySelector('.genres-form').insertAdjacentHTML('beforeend', markup);
 }
 
+/*****************************************************
+ ****event listener na gumb na kraju liste žanrova****
+ ****************************************************/
 
 document.querySelector('.overlay-content').addEventListener ('click', e=>{ 
     let genreId = 0;
@@ -241,6 +287,9 @@ document.querySelector('.overlay-content').addEventListener ('click', e=>{
     
 });
 
+/************************************************************************************************************************
+ ****s obzirom da se overlay koristi za više stvari, ovo koristim da obrišem childove diva s klasom "overlay-content"****
+ ***********************************************************************************************************************/
 
 const deleteGenreList = () => {
     let list = document.querySelector('.overlay-content');
@@ -248,6 +297,10 @@ const deleteGenreList = () => {
             list.removeChild(list.firstChild);
         }
 }
+
+/***************************************
+ ****rendera film iz odabranog žanra**** 
+ **************************************/
 
 const generateOneMovieByGenre = rouletteMovie => {
     const markup = `
