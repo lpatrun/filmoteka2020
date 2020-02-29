@@ -1,19 +1,12 @@
 /* const getData = () => {
     const key = '5945a0abd9acd913047172b2e6571d3e';
     axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${key}&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`).then(response => {
-        movieData = response.data.results;
-        console.log(movieData);
-    }).then (console.log(movieData));
-};
-getData(); */
-
-/* global state
-    -search object
-    -current movie
 */
+
 const movieData = {};
 const movieGenresState = {};
 const movieGenresDB = {};
+const movieRates = {};
 
 /***********************
  ****Dohvaćanje baza****
@@ -32,21 +25,19 @@ const controlResults = async () => {
         
         //5 renderaj rezultate
         renderMovies(movieData.search.result);
+        /* console.log(movieData.search.result);
+        testGetIndex(); */
     }
 }
 
 const genreResults = async () => {
     const query = 'https://api.themoviedb.org/3/genre/movie/list?api_key=5945a0abd9acd913047172b2e6571d3e';
-
     if (query){
         //1 novi objekt
         movieGenresState.search = new Search(query);
-
         //2 traži žanrove
         await movieGenresState.search.getGenresResults();
-
         //console.log(movieGenresState.search.genre.data.genres);
-        
     }
 }
 
@@ -65,9 +56,7 @@ class Search {
     constructor (query){
         this.query = query;
     }
-
-    async getResults () {
-        
+    async getResults () {  
         try {
             const res = await axios(`${this.query}`);
             this.result = res.data.results;        
@@ -75,7 +64,6 @@ class Search {
             alert(error);
         }   
     }
-
     async getGenresResults (){
         try {
             const gen = await axios(`${this.query}`);
@@ -84,7 +72,6 @@ class Search {
             alert(error);
         } 
     }
-
     async getRouleteResults (){
         try {
             const genId = await axios(`${this.query}`);
@@ -241,8 +228,6 @@ document.querySelector('.closebtn').addEventListener ('click', e=> {
 
 document.querySelector('.movie-roulette').addEventListener('click', e => {
     e.preventDefault();
-    //document.querySelector('.movies-container-wrapper').classList.toggle('hide');
-    //document.querySelector('.load-more').classList.toggle('hide');
     document.getElementById("myNav").style.display = "block";
     const miniMarkup =`<form class="genres-form"></form>`;
     document.querySelector('.overlay-content').insertAdjacentHTML('beforeend', miniMarkup);
@@ -276,15 +261,13 @@ document.querySelector('.overlay-content').addEventListener ('click', e=>{
         var ele = document.getElementsByName('genre-type'); 
         for(let k = 0; k < ele.length; k++) { 
             if(ele[k].checked) 
-            //console.log(ele[i].value);
             genreId = ele[k].value;
         }
         deleteGenreList();
         const miniMarkup =`<ul class="render-a-movie"></ul>`;
         document.querySelector('.overlay-content').insertAdjacentHTML('beforeend', miniMarkup);
         rouletteResults(genreId);        
-    }
-    
+    }   
 });
 
 /************************************************************************************************************************
@@ -310,12 +293,159 @@ const generateOneMovieByGenre = rouletteMovie => {
         <div class="movie-overview-ol">Overview: ${rouletteMovie[0].overview}</div>
         <div class="test-class clear">
             <div class="movie-rating-ol"><b>Rating:</b> <em>${rouletteMovie[0].vote_average}</em></div>
-            <div class="movie-star-rating-ol"><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span></div>
+            <div class='rating' data-itemid=${rouletteMovie[0].id}>
+                <span class='star' id="1" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="2" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="3" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="4" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="5" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="6" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="7" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="8" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="9" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="10" onclick="saveStar(this.id)">☆</span>
+            </div>     
         </div>
         <div class="movie-popularity-ol"><b>Popularity:</b> <em>${rouletteMovie[0].popularity}</em></div>
-        <div class="movie-lang-ol"><b>Language:</b> <em>${rouletteMovie[0].original_language}</em></div>
-        
+        <div class="movie-lang-ol"><b>Language:</b> <em>${rouletteMovie[0].original_language}</em></div>   
     </li>
     `;
     document.querySelector('.render-a-movie').insertAdjacentHTML('beforeend', markup);
+    getRating(`${parseInt(rouletteMovie[0].id)}`);
 } 
+
+// Check we can access localstorage
+if (!window.localStorage) {
+    console.log('Unable to access LS');
+}
+
+class Rates {
+    constructor() {
+        this.rates = [];
+    }
+
+    addUpdateRate(id, movieID) {
+        let index = -1;
+        let trazilo;
+
+        movieID = parseInt(movieID);
+        id = parseInt(id);
+        for (trazilo = 0; trazilo <= movieRates.rates.rates.length; trazilo++){
+            if ( parseInt(movieRates.rates.rates[trazilo].movieID) === parseInt(movieID)){
+                    index = trazilo;
+                    break;
+                }
+            }
+        if (index >= 0){
+            movieRates.rates.rates[trazilo].id = parseInt(id);
+            this.persistData();
+        } 
+        
+        /* else {
+            const rate = { id, movieID };
+            this.rates.push(rate);
+            // Perist data in localStorage
+            this.persistData();
+            return rate;
+        }  */      
+    }
+
+    saveMovieData (movieID){
+        let id = 0;
+        const rate = { id, movieID };
+        this.rates.push(rate);
+        // Perist data in localStorage
+        this.persistData();
+        return rate;
+    }
+    
+    findRate(movieID){
+        movieID = parseInt(movieID);
+        let ocjena = 0, trazilo;         
+        for (trazilo = 0; trazilo <= movieRates.rates.rates.length; trazilo++){          
+            if ( parseInt(movieRates.rates.rates[trazilo].movieID) === parseInt(movieID)){
+                ocjena = parseInt(movieRates.rates.rates[trazilo].id); 
+                break;
+            }
+        }
+        return ocjena;
+    }
+
+    fillSessionStorage () {
+        let sessionStorage = [];
+        for (let i = 0; i < movieRates.rates.rates.length; i++){          
+            sessionStorage.push(movieRates.rates.rates[i].movieID);
+        }
+        return sessionStorage;
+    }
+
+    deteleAll(){
+        this.rates.splice(0, 5);
+        this.persistData();
+    } 
+
+    persistData() {
+        localStorage.setItem('rates', JSON.stringify(this.rates));
+    }
+
+    readStorage() {
+        const storage = JSON.parse(localStorage.getItem('rates'));
+        if (storage) this.rates = storage;
+    }
+
+}
+
+let sessionStorage = [];
+
+startingF = () =>{
+    sessionStorage = movieRates.rates.fillSessionStorage();
+}
+
+saveStar = (id) => {
+    let movieID = parseInt(document.querySelector('.rating').dataset.itemid);
+    let prvi = movieRates.rates.findRate(movieID);
+    const mainFunct = () => {movieRates.rates.addUpdateRate(id, movieID);}
+    mainFunct();
+    let drugi = movieRates.rates.findRate(movieID);
+
+    if ( prvi !== drugi || prvi !== 1){
+        getRating(movieID);
+    } else if ( prvi === drugi && prvi === 1) {
+        id = 0;
+        const mainFunct = () => {movieRates.rates.addUpdateRate(id, movieID);}
+        mainFunct();
+
+        var stars = document.getElementsByClassName("star");
+        stars[0].style.color = "black";
+    }
+    console.log(movieRates.rates.rates);
+    /* const deleteAll = () => {movieRates.rates.deteleAll();}
+    deleteAll(); */ 
+}
+
+getRating = (movieID) => { 
+    movieID = parseInt(movieID);
+    if (sessionStorage.includes(movieID) == false) {
+        movieRates.rates.saveMovieData(movieID);
+        sessionStorage.push(movieID);   
+    } else {
+        let a = movieRates.rates.findRate(movieID);
+        var stars = document.getElementsByClassName("star");
+        for (var i = 0; i < stars.length; i++) {
+            if (i >= a) {
+            stars[i].style.color = "black";
+            } else {
+            stars[i].style.color = "orange";
+            }
+        }
+    } 
+}
+
+window.addEventListener('load', () => {
+    movieRates.rates = new Rates();
+    //restore
+    movieRates.rates.readStorage();
+    startingF();
+    console.log(sessionStorage);
+});
+
