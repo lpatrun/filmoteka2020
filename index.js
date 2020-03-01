@@ -132,15 +132,15 @@ const renderMovie = (movie, i) => {
     document.querySelector('.render-movies').insertAdjacentHTML('beforeend', markup);
 }
 
-let i = 0, j = 3;
+let ii = 0, jj = 3;
 
 const renderMovies = movies => {
     //console.log(movies);
-    for (; i <= j ; i++){
-        
-        renderMovie(movies[i], i);
+    for (; ii <= jj ; ii++){
+        renderMovie(movies[ii], ii);
     }
     //movies.forEach(renderMovie);
+    document.querySelector('.render-movies').insertAdjacentHTML('beforeend', '<div class="clear"></div>');
 }
 
 /***************************************
@@ -149,10 +149,10 @@ const renderMovies = movies => {
 
 document.querySelector('.load-more').addEventListener('click', e => {
     e.preventDefault();
-    j += 4;
+    jj += 4;
     console.log('click');
     renderMovies(movieData.search.result);
-    if ( (j + 4) > 20) {
+    if ( (jj + 4) > 20) {
         let element = document.querySelector('.load-more');
         element.parentNode.removeChild(element);
     }
@@ -170,7 +170,18 @@ const renderAMovie = (movie, i) => {
         <div class="movie-overview-ol">Overview: ${movie.overview}</div>
         <div class="test-class clear">
             <div class="movie-rating-ol"><b>Rating:</b> <em>${movie.vote_average}</em></div>
-            <div class="movie-star-rating-ol"><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span></div>
+            <div class='rating' data-itemid=${movie.id}>
+                <span class='star' id="1" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="2" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="3" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="4" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="5" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="6" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="7" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="8" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="9" onclick="saveStar(this.id)">☆</span>
+                <span class='star' id="10" onclick="saveStar(this.id)">☆</span>
+            </div>    
         </div>
         <div class="movie-popularity-ol"><b>Popularity:</b> <em>${movie.popularity}</em></div>
         <div class="movie-lang-ol"><b>Language:</b> <em>${movie.original_language}</em></div>
@@ -178,6 +189,7 @@ const renderAMovie = (movie, i) => {
     </li>
     `;
     document.querySelector('.render-a-movie').insertAdjacentHTML('beforeend', markup);
+    getRating(`${parseInt(movie.id)}`);
 }
 
 /*********************************
@@ -186,10 +198,6 @@ const renderAMovie = (movie, i) => {
 
 document.querySelector('.render-movies').addEventListener ('click', e=>{ 
     const id = e.target.closest('.movie').dataset.itemid;
-    /* let list = document.querySelector('.overlay-content');
-    while (list.hasChildNodes()){
-        list.removeChild(list.firstChild);
-    } */
     document.getElementById("myNav").style.display = "block";
     const miniMarkup =`<ul class="render-a-movie"></ul>`;
     document.querySelector('.overlay-content').insertAdjacentHTML('beforeend', miniMarkup);
@@ -448,4 +456,3 @@ window.addEventListener('load', () => {
     startingF();
     console.log(sessionStorage);
 });
-
