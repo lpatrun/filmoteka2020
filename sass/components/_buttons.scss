@@ -1,0 +1,27 @@
+.button {
+    background-color: $color-primary;
+    color: $color-white; 
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    font-size: 22px;
+    height: 60px;
+
+    &:focus {
+        outline: none;
+    }
+
+    &__load-more{
+        width: 120px;
+        border-radius: 15px;
+        margin-left:15%;
+    }
+
+    &__movie-roulette {
+        width: 60px;
+        border-radius: 30px;
+        padding: 0;
+        margin-right: 10%;
+        float: right;
+    }
+}
