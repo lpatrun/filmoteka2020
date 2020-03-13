@@ -1,0 +1,25 @@
+{
+  "name": "filmoteka2020",
+  "version": "2.0.0",
+  "description": "Small app to review currently popular movies.",
+  "main": "index.js",
+  "scripts": {
+    "watch:sass": "node-sass sass/main.scss css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lpatrun/filmoteka2020.git"
+  },
+  "keywords": [
+    "filmovi"
+  ],
+  "author": "Luka P",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lpatrun/filmoteka2020/issues"
+  },
+  "homepage": "https://github.com/lpatrun/filmoteka2020#readme",
+  "devDependencies": {
+    "node-sass": "^4.13.1"
+  }
+}
