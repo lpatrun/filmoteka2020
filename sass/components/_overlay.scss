@@ -4,48 +4,46 @@
     width: 100%;
     position: fixed;
     z-index: 1;
-    background-color: rgba ( $color-black, .45);
+    background-color: rgba( $color-black, .45);
     backdrop-filter: blur(10px);
     transition: all .4s;
 
     &-content {
-        /* border: black 1px solid; */
         background-color: $color-white;
-        width: 45%;
+        width: 50%;
         margin: 0 auto;
-        margin-top: 5%;
+        margin-top: 3%;
         padding: 1%;
-        box-shadow:  1px 1px 15px rgba( $color-black, .3);
+        box-shadow:  1px 10px 15px rgba( $color-black, .3);
     }
 }
 
 .closebtn {
-    font-size: 60px;
+    font-size: 50px;
+    margin-top: -25px;
     text-decoration: none;
-    color: $color-gray-dark-2;
-    display: block;
-    position: absolute;
-    top: 10px;
-    right: 45px;
+    color: $color-gray-dark-3;
+    cursor: pointer;
     transition: all .3s;
     
     &:hover,
     &:focus {
-        color: #222222;
-    }
-}
-
-.render-a-movie {
-    ul li{
-        margin: 0 auto;
+        color: $color-primary;
     }
 }
 
 .movie {
     
+    &__first-row {
+        display: flex;
+        flex:1;
+        justify-content: space-between;
+        align-items: center;
+    }
+
     &-name-year-ol {
         margin-bottom: 15px;
-        font-size: 24px;
+        font-size: 2.4rem;
     } 
     
     &-img-ol {
@@ -55,56 +53,63 @@
         position: relative;
     }
 
-    &-overview-ol {
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-        font-size: 14px;
-        width: 97%;
-        height: 70px;
-        background-color: $color-gray-dark-3;
-        color: $color-gray-light-2;
-        padding: 10px;    
-    }
-
-    &-rating-ol {
-        margin-bottom: 15px;
-        margin-left: 10px;
+    &-overview-ol, &-rating-ol, &-popularity-ol, &-lang-ol {
+        margin: 15px 10px;
+        font-size: 1.6rem;
     }
     
     &-star-rating-ol {
-        
-        transition: all .3s;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        width: 50%;
+        height: 55px;
+        background-color: #fff;
+        color: $color-gray-light-2;
+        padding: 0 10px;  
         span {
             font-size: 40px;
             &:hover { 
                 cursor: pointer; 
             }            
         }        
-    }
-
-    &-popularity-ol {
-        margin-bottom: 15px;
-        margin-left: 10px;
     } 
-
-    &-lang-ol {
-        margin-bottom: 15px;
-        margin-left: 10px;
-    }   
 }
 
 .genres-form {
-    margin: 25px;
-    padding: 10px;
+    margin: 35px; 
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1rem;
 }
 
 .form {
 
+    &__row {
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+    &__close-btn {
+        font-size: 60px;
+        margin:-20px 0px;
+        text-decoration: none;
+        color: $color-gray-dark-3;
+        cursor: pointer;
+        transition: all .3s;
+        
+        &:hover,
+        &:focus {
+            color: $color-primary;
+        }
+    }
+    
+
     &__radio-group {
-        width: 45%;
-        display: inline-block;
-        margin-bottom: 5px;
+        box-shadow: 0px 1px 3px rgba(0,0,0,.7);
+        padding: 15px;
+        width: 100%;
+        box-sizing: border-box; 
     }
 
     &__radio-input {
@@ -119,20 +124,20 @@
     }
 
     &__radio-button {
-        height: 10px;
-        width: 10px;
+        height: 15px;
+        width: 15px;
         border: 5px solid $color-primary;
         border-radius: 50rem;
         display: inline-block;
         position: absolute;
         left:0;
-        margin-bottom: 5px;
+        bottom: -2px;
 
         &::after {
             content: "";
             display: block;
-            height: 1.2rem;
-            width: 1.2rem;
+            height: 1rem;
+            width: 1rem;
             border-radius: 50%;
             position: absolute;
             top: 50%;
@@ -150,8 +155,8 @@
 }
 
 .genres-form-send-genre {
-    margin-left: 35px;
-    margin-bottom: 25px;
+    margin: 25px auto;
+    display: grid;
     width: 120px;
     height: 55px;
     background-color: $color-primary;
