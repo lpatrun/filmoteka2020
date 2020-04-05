@@ -15,6 +15,11 @@
         margin-top: 3%;
         padding: 1%;
         box-shadow:  1px 10px 15px rgba( $color-black, .3);
+
+        @media only screen and (max-width: 900px ) {
+            width: 85%;
+            margin-top: 10%;
+        }
     }
 }
 
@@ -25,6 +30,11 @@
     color: $color-gray-dark-3;
     cursor: pointer;
     transition: all .3s;
+
+    @media only screen and (max-width: 900px ) {
+        font-size: 30px;
+        margin-top: -20px;
+    } 
     
     &:hover,
     &:focus {
@@ -32,13 +42,17 @@
     }
 }
 
-.movie {
-    
+.movie-ol {
+
     &__first-row {
         display: flex;
         flex:1;
         justify-content: space-between;
         align-items: center;
+
+        @media only screen and (max-width: 900px ) {
+            margin: 2vh 2% 0 2%;
+        } 
     }
 
     &-name-year-ol {
@@ -51,6 +65,11 @@
         background-size: cover;
         background-repeat: no-repeat;
         position: relative;
+
+        @media only screen and (max-width: 900px ) {
+            height: 175px;
+            background-size: contain;
+        }
     }
 
     &-overview-ol, &-rating-ol, &-popularity-ol, &-lang-ol {
@@ -67,11 +86,22 @@
         background-color: #fff;
         color: $color-gray-light-2;
         padding: 0 10px;  
+
+        @media only screen and (max-width: 900px ) {
+            width: 75%;
+            height: 35px;
+            bottom: -1px;
+            left: -1px;
+        }   
+
         span {
             font-size: 40px;
             &:hover { 
                 cursor: pointer; 
-            }            
+            }     
+            @media only screen and (max-width: 900px ) {
+                font-size: 20px;
+            }        
         }        
     } 
 }
@@ -81,6 +111,12 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1rem;
+
+    @media only screen and (max-width: 900px ) {
+        margin: 15px; 
+        grid-template-columns: 1fr 1fr;
+        grid-gap: .5rem;
+    }   
 }
 
 .form {
@@ -97,6 +133,11 @@
         color: $color-gray-dark-3;
         cursor: pointer;
         transition: all .3s;
+
+        @media only screen and (max-width: 900px ) {
+            font-size: 40px;
+            margin:-10px 4px -15px 0px;
+        } 
         
         &:hover,
         &:focus {
@@ -110,6 +151,12 @@
         padding: 15px;
         width: 100%;
         box-sizing: border-box; 
+
+        @media only screen and (max-width: 900px ) {
+            box-shadow: 0px 0px 2px rgba(0,0,0,.4);
+            padding: 10px;
+            display: flex;
+        } 
     }
 
     &__radio-input {
@@ -121,6 +168,11 @@
         cursor: pointer;
         position: relative;
         padding-left: 35px;
+
+        @media only screen and (max-width: 900px ) {
+            font-size: 14px;
+            padding-left: 35px;
+        }
     }
 
     &__radio-button {
@@ -132,6 +184,12 @@
         position: absolute;
         left:0;
         bottom: -2px;
+
+        @media only screen and (max-width: 900px ) {
+            height: 10px;
+            width: 10px;
+            top: 0px;
+        }
 
         &::after {
             content: "";
@@ -146,6 +204,11 @@
             background-color: $color-primary;
             opacity: 0;
             transition: opacity .15s;
+
+            @media only screen and (max-width: 900px ) {
+                height: .8rem;
+                width: .8rem;
+            }
         }
     }
 
@@ -166,6 +229,13 @@
     border:none;
     box-shadow: 0 5px 10px rgba( $color-black, .4);
     transition: all .2s;
+
+    @media only screen and (max-width: 900px ) {
+        margin: 15px auto;
+        width: 120px;
+        height: 35px;
+        font-size: 18px;
+    }
      
     &:hover {
         transform: translateY(-3px);

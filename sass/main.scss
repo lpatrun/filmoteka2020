@@ -21,6 +21,11 @@ $gutter-horizontal: 6rem;
     .col-1-of-4 {
         width: calc( (100% - 4*#{$gutter-horizontal}) /4 ); 
         margin: 0 calc(#{$gutter-horizontal} / 2) 8vh calc(#{$gutter-horizontal} / 2);
+
+        @media only screen and (max-width: 900px ) {
+            width: 85%;
+            margin: 6vh auto;
+        } 
     }
 }
 
@@ -31,6 +36,9 @@ $gutter-horizontal: 6rem;
 
 html {
     font-size: 62.5%;
+    @media only screen and (max-width: 900px ) {
+        font-size: 50%;
+    } 
 }
 
 body, ul, li, p, h1, h2, h3, h4 {

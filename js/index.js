@@ -142,19 +142,19 @@ let stars = `<span class='star' id="1" onclick="saveStar(this.id)">☆</span>
 const renderAMovie = (movie, i) => {
     const markup = `
     <li class="movie-ol"  data-itemid=${i}>
-        <div class="movie__first-row">
-            <div class="movie-name-year-ol">${movie.title} (${limitMovieYear(movie.release_date)})</div>
+        <div class="movie-ol__first-row">
+            <div class="movie-ol-name-year-ol">${movie.title} (${limitMovieYear(movie.release_date)})</div>
             <a class="closebtn" onclick="clearOverlay()">&times;</a>
         </div>
-        <div class="movie-img-ol" style = background-image:url("https://image.tmdb.org/t/p/w780/${movie.backdrop_path}"); alt="${movie.title}">
-            <div class='rating movie-star-rating-ol' data-itemid=${movie.id}>
+        <div class="movie-ol-img-ol" style = background-image:url("https://image.tmdb.org/t/p/w780/${movie.backdrop_path}"); alt="${movie.title}">
+            <div class='rating movie-ol-star-rating-ol' data-itemid=${movie.id}>
                 ${stars}
             </div>    
         </div>
-        <div class="movie-overview-ol"><strong>Overview</strong>: ${movie.overview}</div>
-        <div class="movie-rating-ol"><b>Rating:</b> <em>${movie.vote_average}</em></div>
-        <div class="movie-popularity-ol"><b>Popularity:</b> <em>${movie.popularity}</em></div>
-        <div class="movie-lang-ol"><b>Language:</b> <em>${movie.original_language}</em></div>
+        <div class="movie-ol-overview-ol"><strong>Overview</strong>: ${movie.overview}</div>
+        <div class="movie-ol-rating-ol"><b>Rating:</b> <em>${movie.vote_average}</em></div>
+        <div class="movie-ol-popularity-ol"><b>Popularity:</b> <em>${movie.popularity}</em></div>
+        <div class="movie-ol-lang-ol"><b>Language:</b> <em>${movie.original_language}</em></div>
         
     </li>
     `;
@@ -282,19 +282,19 @@ const deleteGenreList = () => {
 const generateOneMovieByGenre = rouletteMovie => {
     const markup = `
     <li class="movie-ol">
-        <div class="movie__first-row">
-            <div class="movie-name-year-ol">${rouletteMovie[0].title} (${limitMovieYear(rouletteMovie[0].release_date)})</div>
+        <div class="movie-ol__first-row">
+            <div class="movie-ol-name-year-ol">${rouletteMovie[0].title} (${limitMovieYear(rouletteMovie[0].release_date)})</div>
             <a class="closebtn" onclick="clearOverlay()">&times;</a>
         </div>
-        <div class="movie-img-ol" style=background-image:url("https://image.tmdb.org/t/p/w780/${rouletteMovie[0].backdrop_path}") alt="${rouletteMovie[0].title}">
-            <div class='rating movie-star-rating-ol' data-itemid=${rouletteMovie[0].id}>
+        <div class="movie-ol-img-ol" style=background-image:url("https://image.tmdb.org/t/p/w780/${rouletteMovie[0].backdrop_path}") alt="${rouletteMovie[0].title}">
+            <div class='rating movie-ol-star-rating-ol' data-itemid=${rouletteMovie[0].id}>
                 ${stars}
             </div>         
 	    </div>
-        <div class="movie-overview-ol"><strong>Overview</strong>: ${rouletteMovie[0].overview}</div>
-        <div class="movie-rating-ol"><b>Rating:</b> <em>${rouletteMovie[0].vote_average}</em></div>
-        <div class="movie-popularity-ol"><b>Popularity:</b> <em>${rouletteMovie[0].popularity}</em></div>
-        <div class="movie-lang-ol"><b>Language:</b> <em>${rouletteMovie[0].original_language}</em></div>   
+        <div class="movie-ol-overview-ol"><strong>Overview</strong>: ${rouletteMovie[0].overview}</div>
+        <div class="movie-ol-rating-ol"><b>Rating:</b> <em>${rouletteMovie[0].vote_average}</em></div>
+        <div class="movie-ol-popularity-ol"><b>Popularity:</b> <em>${rouletteMovie[0].popularity}</em></div>
+        <div class="movie-ol-lang-ol"><b>Language:</b> <em>${rouletteMovie[0].original_language}</em></div>   
     </li>
     `;
     document.querySelector('.render-a-movie').insertAdjacentHTML('beforeend', markup);
