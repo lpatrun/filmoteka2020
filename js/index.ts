@@ -1,3 +1,5 @@
+export {};
+
 /* const getData = () => {
     const key = '5945a0abd9acd913047172b2e6571d3e';
     axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${key}&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`).then(response => {

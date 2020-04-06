@@ -20,15 +20,15 @@
         transform: translateY(-5px);
     }
 
-    &-img {
+    &__img {
         margin: 0 auto;
     }
 
-    &-name-year {
+    &__name-year {
         font-size: 1.8rem;
     }
 
-    &-lang, &-rating {
+    &__lang, &__rating {
         font-size: 1.6rem;
     }    
 }

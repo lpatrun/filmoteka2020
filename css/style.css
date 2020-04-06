@@ -72,11 +72,11 @@ ul li {
   .movie:hover {
     box-shadow: 0rem 0.4rem 1.5rem rgba(0, 0, 0, 0.15);
     transform: translateY(-5px); }
-  .movie-img {
+  .movie__img {
     margin: 0 auto; }
-  .movie-name-year {
+  .movie__name-year {
     font-size: 1.8rem; }
-  .movie-lang, .movie-rating {
+  .movie__lang, .movie__rating {
     font-size: 1.6rem; }
 
 .overlay {
@@ -88,7 +88,7 @@ ul li {
   background-color: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(10px);
   transition: all .4s; }
-  .overlay-content {
+  .overlay__content {
     background-color: white;
     width: 50%;
     margin: 0 auto;
@@ -96,7 +96,7 @@ ul li {
     padding: 1%;
     box-shadow: 1px 10px 15px rgba(0, 0, 0, 0.3); }
     @media only screen and (max-width: 900px) {
-      .overlay-content {
+      .overlay__content {
         width: 85%;
         margin-top: 10%; } }
 
@@ -123,25 +123,25 @@ ul li {
     .movie-ol__first-row {
       margin: 2vh 2% 0 2%; } }
 
-.movie-ol-name-year-ol {
+.movie-ol__name-year-ol {
   margin-bottom: 15px;
   font-size: 2.4rem; }
 
-.movie-ol-img-ol {
+.movie-ol__img-ol {
   height: 400px;
   background-size: cover;
   background-repeat: no-repeat;
   position: relative; }
   @media only screen and (max-width: 900px) {
-    .movie-ol-img-ol {
+    .movie-ol__img-ol {
       height: 175px;
       background-size: contain; } }
 
-.movie-ol-overview-ol, .movie-ol-rating-ol, .movie-ol-popularity-ol, .movie-ol-lang-ol {
+.movie-ol__overview-ol, .movie-ol__rating-ol, .movie-ol__popularity-ol, .movie-ol__lang-ol {
   margin: 15px 10px;
   font-size: 1.6rem; }
 
-.movie-ol-star-rating-ol {
+.movie-ol__star-rating-ol {
   position: absolute;
   bottom: 0px;
   left: 0px;
@@ -151,17 +151,17 @@ ul li {
   color: lightgray;
   padding: 0 10px; }
   @media only screen and (max-width: 900px) {
-    .movie-ol-star-rating-ol {
+    .movie-ol__star-rating-ol {
       width: 75%;
       height: 35px;
       bottom: -1px;
       left: -1px; } }
-  .movie-ol-star-rating-ol span {
+  .movie-ol__star-rating-ol span {
     font-size: 40px; }
-    .movie-ol-star-rating-ol span:hover {
+    .movie-ol__star-rating-ol span:hover {
       cursor: pointer; }
     @media only screen and (max-width: 900px) {
-      .movie-ol-star-rating-ol span {
+      .movie-ol__star-rating-ol span {
         font-size: 20px; } }
 
 .genres-form {

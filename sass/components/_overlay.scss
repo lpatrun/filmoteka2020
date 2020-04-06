@@ -8,7 +8,7 @@
     backdrop-filter: blur(10px);
     transition: all .4s;
 
-    &-content {
+    &__content {
         background-color: $color-white;
         width: 50%;
         margin: 0 auto;
@@ -55,12 +55,12 @@
         } 
     }
 
-    &-name-year-ol {
+    &__name-year-ol {
         margin-bottom: 15px;
         font-size: 2.4rem;
     } 
     
-    &-img-ol {
+    &__img-ol {
         height: 400px;
         background-size: cover;
         background-repeat: no-repeat;
@@ -72,12 +72,12 @@
         }
     }
 
-    &-overview-ol, &-rating-ol, &-popularity-ol, &-lang-ol {
+    &__overview-ol, &__rating-ol, &__popularity-ol, &__lang-ol {
         margin: 15px 10px;
         font-size: 1.6rem;
     }
     
-    &-star-rating-ol {
+    &__star-rating-ol {
         position: absolute;
         bottom: 0px;
         left: 0px;
