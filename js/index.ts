@@ -1,14 +1,7 @@
-export {};
-
-/* const getData = () => {
-    const key = '5945a0abd9acd913047172b2e6571d3e';
-    axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${key}&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`).then(response => {
-*/
-
-const movieData = {};
-const movieGenresState = {};
-const movieGenresDB = {};
-const movieRates = {};
+const movieData = <any>{};
+const movieGenresState = <any>{};
+const movieGenresDB = <any>{};
+const movieRates = <any>{};
 
 /***********************
  ****Dohvaćanje baza****
@@ -17,32 +10,32 @@ const movieRates = {};
 const controlResults = async () => {
     const query = 'https://api.themoviedb.org/3/discover/movie?api_key=5945a0abd9acd913047172b2e6571d3e&sort_by=popularity.desc&include_adult=false&include_video=false&page=1';
 
-    if (query){
-        movieData.search = new Search(query);
-        await movieData.search.getResults();
-        renderMovies(movieData.search.result);
-    }
+    movieData.search = new Search(query);
+    await movieData.search.getResults();
+    renderMovies(movieData.search.result); 
 }
 
 const genreResults = async () => {
     const query = 'https://api.themoviedb.org/3/genre/movie/list?api_key=5945a0abd9acd913047172b2e6571d3e';
-    if (query){
-        movieGenresState.search = new Search(query);
-        await movieGenresState.search.getGenresResults();
-    }
+    
+    movieGenresState.search = new Search(query);
+    await movieGenresState.search.getGenresResults();
 }
 
-const rouletteResults = async (genreId) => {
+const rouletteResults = async (genreId: any) => {
     const query = `https://api.themoviedb.org/3/discover/movie?api_key=5945a0abd9acd913047172b2e6571d3e&with_genres=${genreId}`;
-    if(query){
-        movieGenresDB.search = new Search (query);
-        await movieGenresDB.search.getRouleteResults();
-        generateOneMovieByGenre(movieGenresDB.search.genreId.data.results);
-    }
+    
+    movieGenresDB.search = new Search (query);
+    await movieGenresDB.search.getRouleteResults();
+    generateOneMovieByGenre(movieGenresDB.search.genreId.data.results); 
 }
 
 class Search {
-    constructor (query){
+    query: string;
+    result: any;
+    genre: any;
+    genreId: any;
+    constructor (query: string){
         this.query = query;
     }
     async getResults () {  
@@ -75,21 +68,31 @@ class Search {
  ****ograničavanje broja riječi u nazivu i godini objave****
  **********************************************************/
 
-const limitMovieTitle = title => {
-    if( title.length > 25) {
-        return(title.slice(0, 22) + "...")
+const maximumNameLength = 25;
+
+const limitMovieTitle = (title: string) => {
+    if( title.length > maximumNameLength) {
+        return(title.slice(0, maximumNameLength-3) + "...")
     } else return title;
 }
 
-const limitMovieYear = year => {
+const limitMovieYear = (year: string) => {
     return(year.slice(0, 4));
 }
+
+
+const renderer = document.querySelector('.render-movies') as HTMLElement;
+const buttonLoadMore = document.querySelector('.button__load-more') as HTMLElement;
+const navigacija = document.getElementById("myNav") as HTMLElement;
+const overlayContent = document.querySelector('.overlay__content') as HTMLElement;
+const element = document.querySelector('.button__load-more') as HTMLElement;
+const buttonMovieRoulette = document.querySelector('.button__movie-roulette') as HTMLElement;
 
 /*********************************
  ****rendera filmove u li-jeve****
  ********************************/
 
-const renderMovie = (movie, i) => {
+const renderMovie = (movie: { poster_path: string; title: string; release_date: string; original_language: string; vote_average: string; }, i: number) => {
     const markup = `
     <li class="movie col-1-of-4"  data-itemid=${i}>
         <div class="movie__img"><img src ="https://image.tmdb.org/t/p/w185/${movie.poster_path}" alt="${movie.title}"></div>
@@ -98,30 +101,31 @@ const renderMovie = (movie, i) => {
         <div class="movie__rating">Rating: ${movie.vote_average}</div>
     </li>
     `;
-    document.querySelector('.render-movies').insertAdjacentHTML('beforeend', markup);
+    renderer.insertAdjacentHTML('beforeend', markup);
 }
 
-let ii = 0, jj = 3;
+let startingMovie = 0, endingMovie = 3;
 
-const renderMovies = movies => {
+const renderMovies = (movies: { poster_path: string; title: string; release_date: string; original_language: string; vote_average: string; }[]) => {
     //console.log(movies);
-    for (; ii <= jj ; ii++){
-        renderMovie(movies[ii], ii);
+    for (startingMovie; startingMovie <= endingMovie ; startingMovie++){
+        renderMovie(movies[startingMovie], startingMovie);
     }
     //movies.forEach(renderMovie);
-    document.querySelector('.render-movies').insertAdjacentHTML('beforeend', '<div class="clear"></div>');
+    renderer.insertAdjacentHTML('beforeend', '<div class="clear"></div>');
 }
 
 /***************************************
  ****gumb za učitavanje reda filmova****
  **************************************/
 
-document.querySelector('.button__load-more').addEventListener('click', e => {
+
+buttonLoadMore.addEventListener('click', e => {
     e.preventDefault();
-    jj += 4;
+    endingMovie += 4;
     renderMovies(movieData.search.result);
-    if ( (jj + 4) > 20) {
-        let element = document.querySelector('.button__load-more');
+    if ( (endingMovie + 4) > 20) {
+        
         element.parentNode.removeChild(element);
     }
 });
@@ -141,7 +145,8 @@ let stars = `<span class='star' id="1" onclick="saveStar(this.id)">☆</span>
 <span class='star' id="9" onclick="saveStar(this.id)">☆</span>
 <span class='star' id="10" onclick="saveStar(this.id)">☆</span>`;
 
-const renderAMovie = (movie, i) => {
+const renderAMovie = (movie: { title: string; release_date: string; backdrop_path: string; id: string;
+    overview: string; vote_average: string; popularity: string; original_language: string; }, i: number) => {
     const markup = `
     <li class="movie-ol"  data-itemid=${i}>
         <div class="movie-ol__first-row">
@@ -160,7 +165,8 @@ const renderAMovie = (movie, i) => {
         
     </li>
     `;
-    document.querySelector('.render-a-movie').insertAdjacentHTML('beforeend', markup);
+    const renderOneMovie = document.querySelector('.render-a-movie') as HTMLElement;
+    renderOneMovie.insertAdjacentHTML('beforeend', markup);
     getRating(`${parseInt(movie.id)}`);
 }
 
@@ -170,11 +176,11 @@ const renderAMovie = (movie, i) => {
  ****event listener na filmove****
  ********************************/
 
-document.querySelector('.render-movies').addEventListener ('click', e=>{ 
+renderer.addEventListener ('click', e=>{ 
     const id = e.target.closest('.movie').dataset.itemid;
-    document.getElementById("myNav").style.display = "block";
+    navigacija.style.display = "block";
     const miniMarkup =`<ul class="render-a-movie"></ul>`;
-    document.querySelector('.overlay__content').insertAdjacentHTML('beforeend', miniMarkup);
+    overlayContent.insertAdjacentHTML('beforeend', miniMarkup); 
     renderAMovie(movieData.search.result[id], id);
 });
 
@@ -191,11 +197,10 @@ document.querySelector('.render-movies').addEventListener ('click', e=>{
 });
  */
 
-clearOverlay = () =>{ 
-    document.getElementById("myNav").style.display = "none";
-    let list = document.querySelector('.overlay__content');
-    while (list.hasChildNodes()){
-        list.removeChild(list.firstChild);
+function clearOverlay() { 
+    navigacija.style.display = "none";
+    while (overlayContent.hasChildNodes()){
+        overlayContent.removeChild(overlayContent.firstChild);
     }   
 }
 
@@ -203,11 +208,12 @@ clearOverlay = () =>{
 ****da se overlay može zatvoriti s esc****
 *****************************************/
 
+let escapeKey = 27;
+
   document.addEventListener('keydown', function(event) {
-    if (event.keyCode == 27 || event.which == 27) {
-        document.getElementById("myNav").style.display = "none";
-        let list = document.querySelector('.overlay__content');
-        while (list.hasChildNodes()){ list.removeChild(list.firstChild);   }
+    if (event.keyCode == escapeKey || event.which == escapeKey) {
+        navigacija.style.display = "none";
+        while (overlayContent.hasChildNodes()){ overlayContent.removeChild(overlayContent.firstChild);   }
     }
 });
 
@@ -215,14 +221,14 @@ clearOverlay = () =>{
  ****event listener na rulet button****
  *************************************/
 
-document.querySelector('.button__movie-roulette').addEventListener('click', e => {
+buttonMovieRoulette.addEventListener('click', e => {
     e.preventDefault();
-    document.getElementById("myNav").style.display = "block";
+    navigacija.style.display = "block";
     const miniMarkup =`<div class="form__row"><a class="form__close-btn" onclick="clearOverlay()">&times;</a></div><div class="genres-form"></div>`;
-    document.querySelector('.overlay__content').insertAdjacentHTML('beforeend', miniMarkup);
+    overlayContent.insertAdjacentHTML('beforeend', miniMarkup);
     renderGenres(movieGenresState.search.genre.data.genres);
     const buttonMarkup =`<button class="genres-form-send-genre">Roll</button>`;
-    document.querySelector('.overlay__content').insertAdjacentHTML('beforeend', buttonMarkup);
+    overlayContent.insertAdjacentHTML('beforeend', buttonMarkup);
     document.querySelector('.form__radio-input').checked = true;
 });
 
@@ -230,11 +236,13 @@ document.querySelector('.button__movie-roulette').addEventListener('click', e =>
  ****render žanrova****
  *********************/
 
-const renderGenres = genres => {
+const renderGenres = (genres: any[]) => {
     genres.forEach(renderGenre);
 }
 
-const renderGenre = genre => {
+
+const renderGenre = (genre: { id: number; name: string; }) => {
+    const genresForm = document.querySelector('.genres-form') as HTMLElement;       
     const markup = `
     <div class="form__radio-group">
     <input type="radio" class="form__radio-input" name="genre-type" value=${genre.id} id="${genre.name}">
@@ -244,24 +252,24 @@ const renderGenre = genre => {
     </label>
 </div>
     `;
-    document.querySelector('.genres-form').insertAdjacentHTML('beforeend', markup);
+    genresForm.insertAdjacentHTML('beforeend', markup);
 }
 
 /*****************************************************
  ****event listener na gumb na kraju liste žanrova****
  ****************************************************/
 
-document.querySelector('.overlay__content').addEventListener ('click', e=>{ 
+overlayContent.addEventListener ('click', e=>{ 
     let genreId = 0;
     if (e.target.matches('.genres-form-send-genre')){
-        var ele = document.getElementsByName('genre-type'); 
+        const ele = document.getElementsByName('genre-type'); 
         for(let k = 0; k < ele.length; k++) { 
             if(ele[k].checked) 
             genreId = ele[k].value;
         }
         deleteGenreList();
         const miniMarkup =`<ul class="render-a-movie"></ul>`;
-        document.querySelector('.overlay__content').insertAdjacentHTML('beforeend', miniMarkup);
+        overlayContent.insertAdjacentHTML('beforeend', miniMarkup);
         rouletteResults(genreId);        
     }   
 });
@@ -271,9 +279,8 @@ document.querySelector('.overlay__content').addEventListener ('click', e=>{
  ********************************************************/
 
 const deleteGenreList = () => {
-    let list = document.querySelector('.overlay__content');
-        while (list.hasChildNodes()){
-            list.removeChild(list.firstChild);
+        while (overlayContent.hasChildNodes()){
+            overlayContent.removeChild(overlayContent.firstChild);
         }
 }
 
@@ -281,7 +288,9 @@ const deleteGenreList = () => {
  ****rendera film iz odabranog žanra**** 
  **************************************/
 
-const generateOneMovieByGenre = rouletteMovie => {
+const generateOneMovieByGenre = (rouletteMovie: { title: string; release_date: string; backdrop_path: string; id: any;
+    overview: string; vote_average: number; popularity: number; original_language: string; }[]) => {
+    
     const markup = `
     <li class="movie-ol">
         <div class="movie-ol__first-row">
@@ -299,7 +308,8 @@ const generateOneMovieByGenre = rouletteMovie => {
         <div class="movie-ol__lang-ol"><b>Language:</b> <em>${rouletteMovie[0].original_language}</em></div>   
     </li>
     `;
-    document.querySelector('.render-a-movie').insertAdjacentHTML('beforeend', markup);
+    const renderOneMovie = document.querySelector('.render-a-movie') as HTMLElement;
+    renderOneMovie.insertAdjacentHTML('beforeend', markup);
     getRating(`${parseInt(rouletteMovie[0].id)}`);
 } 
 
@@ -309,30 +319,29 @@ if (!window.localStorage) {
 }
 
 class Rates {
+    rates: any;
     constructor() {
         this.rates = [];
     }
 
-    addUpdateRate(id, movieID) {
+    addUpdateRate(id: number, movieID: number) {
         let index = -1;
         let trazilo;
 
-        movieID = parseInt(movieID);
-        id = parseInt(id);
         for (trazilo = 0; trazilo <= movieRates.rates.rates.length; trazilo++){
-            if ( parseInt(movieRates.rates.rates[trazilo].movieID) === parseInt(movieID)){
+            if ( parseInt(movieRates.rates.rates[trazilo].movieID) === movieID){
                     index = trazilo;
                     break;
                 }
             }
         if (index >= 0){
-            movieRates.rates.rates[trazilo].id = parseInt(id);
+            movieRates.rates.rates[trazilo].id = id;
             this.persistData();
         }      
     }
 
-    saveMovieData (movieID){
-        let id = 0;
+    saveMovieData (movieID: number){
+        const id = 0;
         const rate = { id, movieID };
         this.rates.push(rate);
         // Perist data in localStorage
@@ -340,8 +349,7 @@ class Rates {
         return rate;
     }
     
-    findRate(movieID){
-        movieID = parseInt(movieID);
+    findRate(movieID: any){
         let ocjena = 0, trazilo;         
         for (trazilo = 0; trazilo <= movieRates.rates.rates.length; trazilo++){          
             if ( parseInt(movieRates.rates.rates[trazilo].movieID) === parseInt(movieID)){
@@ -373,44 +381,41 @@ class Rates {
         const storage = JSON.parse(localStorage.getItem('rates'));
         if (storage) this.rates = storage;
     }
-
 }
 
 let sessionStorage = [];
 
-startingF = () =>{
+function startingFunction() {
     sessionStorage = movieRates.rates.fillSessionStorage();
 }
 
-saveStar = (id) => {
+function saveStar(id: any) {
     let movieID = parseInt(document.querySelector('.rating').dataset.itemid);
     let prvi = movieRates.rates.findRate(movieID);
-    const mainFunct = () => {movieRates.rates.addUpdateRate(id, movieID);}
-    mainFunct();
+    movieRates.rates.addUpdateRate(id, movieID);
     let drugi = movieRates.rates.findRate(movieID);
 
     if ( prvi !== drugi || prvi !== 1){
         getRating(movieID);
     } else if ( prvi === drugi && prvi === 1) {
         id = 0;
-        const mainFunct = () => {movieRates.rates.addUpdateRate(id, movieID);}
-        mainFunct();
+        movieRates.rates.addUpdateRate(id, movieID);        
 
-        var stars = document.getElementsByClassName("star");
+        const stars = document.getElementsByClassName("star") as HTMLCollectionOf<HTMLElement>;
         stars[0].style.color = "black";
     }
     /* const deleteAll = () => {movieRates.rates.deteleAll();}
     deleteAll(); */ 
 }
 
-getRating = (movieID) => { 
-    movieID = parseInt(movieID);
+function getRating(movieID: any){ 
+    
     if (sessionStorage.includes(movieID) == false) {
         movieRates.rates.saveMovieData(movieID);
         sessionStorage.push(movieID);   
     } else {
         let a = movieRates.rates.findRate(movieID);
-        var stars = document.getElementsByClassName("star");
+        const stars = document.getElementsByClassName("star") as HTMLCollectionOf<HTMLElement>;
 
         for (var i = 0; i < stars.length; i++) {
             if (i >= a) {
@@ -426,7 +431,7 @@ window.addEventListener('load', () => {
     movieRates.rates = new Rates();
     //restore
     movieRates.rates.readStorage();
-    startingF();
+    startingFunction();
     controlResults();
     genreResults();
     //console.log(sessionStorage);
