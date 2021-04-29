@@ -80,7 +80,6 @@ const limitMovieYear = (year: string) => {
     return(year.slice(0, 4));
 }
 
-
 const renderer = document.querySelector('.render-movies') as HTMLElement;
 const buttonLoadMore = document.querySelector('.button__load-more') as HTMLElement;
 const navigacija = document.getElementById("myNav") as HTMLElement;
@@ -170,8 +169,6 @@ const renderAMovie = (movie: { title: string; release_date: string; backdrop_pat
     getRating(`${parseInt(movie.id)}`);
 }
 
-
-
 /*********************************
  ****event listener na filmove****
  ********************************/
@@ -239,7 +236,6 @@ buttonMovieRoulette.addEventListener('click', e => {
 const renderGenres = (genres: any[]) => {
     genres.forEach(renderGenre);
 }
-
 
 const renderGenre = (genre: { id: number; name: string; }) => {
     const genresForm = document.querySelector('.genres-form') as HTMLElement;       
